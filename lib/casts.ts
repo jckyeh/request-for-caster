@@ -1,5 +1,19 @@
 import { providers, Contract, utils } from "ethers";
+import axios from "axios";
 import got from "got";
+
+export async function getCasts() {
+  try {
+    const result = await axios.get(
+      "https://searchcaster.xyz/api/search?text=startup"
+    );
+    // console.log("result: ", result.data);
+    return result.data.casts;
+  } catch (error) {
+    console.log(error);
+    // return
+  }
+}
 
 export async function doStuff() {
   const ALCHEMY_SECRET = process.env.ALCHEMY_SECRET;

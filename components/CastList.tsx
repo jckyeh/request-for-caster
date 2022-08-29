@@ -1,3 +1,4 @@
+// Not used. Can delete.
 import React, { useEffect } from "react";
 
 import { providers, Contract, utils } from "ethers";
