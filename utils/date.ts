@@ -1,6 +1,8 @@
+// @ts-ignore
 export const getRelativeDate = (unixMs) => {
   const now = new Date();
   const date = new Date(unixMs);
+  // @ts-ignore
   const diff = now - date;
   const minuteDiff = Math.floor(diff / 60000);
   const hourDiff = Math.floor(diff / 3600000);

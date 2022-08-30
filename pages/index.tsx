@@ -1,6 +1,7 @@
 // import useSWR from 'swr';
 
 import type { NextPage } from "next";
+import { ReactNode } from "react";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -53,7 +54,7 @@ const Footer = () => {
   );
 };
 
-const Cast = ({ cast }) => {
+const Cast = ({ cast }: any) => {
   return (
     <div className="border-b border-slate-200 w-full">
       <div className="flex gap-3 my-6 md:my-8">
@@ -81,9 +82,13 @@ const Cast = ({ cast }) => {
   );
 };
 
-const InfoCard = (props) => {
-  console.log("props: ", props);
+interface InfoCardProps {
+  shadow?: boolean;
+  title: string;
+  text: ReactNode;
+}
 
+const InfoCard = (props: InfoCardProps) => {
   return (
     <div
       className={
@@ -157,7 +162,7 @@ const SideBar = () => {
 };
 
 // const Home: NextPage = ({ directory, results }) => {
-const Home: NextPage = ({ results }) => {
+const Home: NextPage = ({ results }: any) => {
   // console.log(`directoryUrl props is: `, directory);
   console.log(`results props is: `, results);
 
@@ -176,16 +181,13 @@ const Home: NextPage = ({ results }) => {
           <h1 className="text-3xl font-bold text-slate-900 md:mb-4">
             💬 Requests
           </h1>
-
           <div className="p-4 rounded-lg bg-purple-50 mt-6 mb-2 md:mt-4 md:mb-0">
             🚧 Currently showing casts mentioning "request" in addition to
             #RFCaster
           </div>
-
-          {results.map((cast, index) => (
+          {results.map((cast: any, index: number) => (
             <Cast key={index} cast={cast} />
           ))}
-
           {/* <CastList /> */}
         </div>
       </main>
