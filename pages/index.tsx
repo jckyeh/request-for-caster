@@ -24,7 +24,7 @@ export async function getServerSideProps() {
 const Header = () => {
   return (
     <header className="flex justify-center w-full border-b border-slate-200">
-      <div className="flex flex-row justify-between items-center w-full max-w-7xl h-20 px-6 md:px-10">
+      <div className="flex flex-row justify-between items-center w-full max-w-6xl h-20 px-6 md:px-10">
         <div className="flex flex-row items-center gap-2">
           <Image src="/icon.svg" alt="Farcaster Logo" width={48} height={48} />
           <div className="font-semibold text-xl text-purple-700">
@@ -135,20 +135,22 @@ const resourcesCardText = (
 
 const SideBar = () => {
   return (
-    <div className="flex flex-initial flex-col md:order-last max-w-xl md:w-4/12 mx-auto md:ml-[8.333333333333332%] mb-10 md:mb-16 gap-6">
-      <InfoCard title="About RFCaster" text={aboutCardText} shadow />
-      <InfoCard title="Resources for Builders" text={resourcesCardText} />
-      <div className="hidden md:block text-sm text-slate-500">
-        💌 HMU for feedback or ideas! @jacky (FC), or on{" "}
-        <a
-          href="https://twitter.com/jckyeh"
-          target="_blank"
-          rel="noopener"
-          className="text-purple-700"
-        >
-          the bird app
-        </a>
-        .
+    <div className="flex flex-initial flex-col md:sticky top-0 md:order-last max-w-xl md:w-4/12 mx-auto md:ml-[8.333333333333332%] mb-10 md:mb-16">
+      <div className="flex flex-col sticky top-12 gap-6">
+        <InfoCard title="🪄 About RFCaster" text={aboutCardText} shadow />
+        <InfoCard title="🏗 Resources for Builders" text={resourcesCardText} />
+        <div className="hidden md:block text-sm text-slate-500">
+          💌 HMU for feedback or ideas! @jacky (FC), or on{" "}
+          <a
+            href="https://twitter.com/jckyeh"
+            target="_blank"
+            rel="noopener"
+            className="text-purple-700"
+          >
+            the bird app
+          </a>
+          .
+        </div>
       </div>
     </div>
   );
@@ -162,18 +164,23 @@ const Home: NextPage = ({ results }) => {
   return (
     <div className="flex min-h-screen flex-col items-center">
       <Head>
-        <title>Create Next App</title>
+        <title>Request for Caster</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Header />
 
-      <main className="md:flex md:flex-row px-6 md:px-10 pt-6 md:pt-12 w-full max-w-7xl">
+      <main className="md:flex md:flex-row px-6 md:px-10 pt-6 md:pt-12 w-full max-w-6xl mb-16">
         <SideBar />
         <div className="flex flex-auto flex-col w-full md:w-[58.333333333333336%] max-w-xl md:max-w-none mx-auto md:mx-0">
           <h1 className="text-3xl font-bold text-slate-900 md:mb-4">
-            🪄 Requests
+            💬 Requests
           </h1>
+
+          <div className="p-4 rounded-lg bg-purple-50 mt-6 mb-2 md:mt-4 md:mb-0">
+            🚧 Currently showing casts mentioning "request" in addition to
+            #RFCaster
+          </div>
 
           {results.map((cast, index) => (
             <Cast key={index} cast={cast} />
@@ -183,7 +190,7 @@ const Home: NextPage = ({ results }) => {
         </div>
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
