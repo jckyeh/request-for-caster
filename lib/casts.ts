@@ -5,7 +5,7 @@ import got from "got";
 export async function getCasts() {
   try {
     const result = await axios.get(
-      "https://searchcaster.xyz/api/search?text=startup"
+      "https://searchcaster.xyz/api/search?text=request"
     );
     // console.log("result: ", result.data);
     return result.data.casts;
