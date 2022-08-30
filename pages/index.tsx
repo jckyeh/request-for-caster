@@ -27,7 +27,7 @@ const Header = () => {
     <header className="flex justify-center w-full border-b border-slate-200">
       <div className="flex flex-row justify-between items-center w-full max-w-6xl h-20 px-6 md:px-10">
         <div className="flex flex-row items-center gap-2">
-          <Image src="/icon.svg" alt="Farcaster Logo" width={48} height={48} />
+          <Image src="/logo.svg" alt="Farcaster Logo" width={48} height={48} />
           <div className="font-semibold text-xl text-purple-700">
             Request for Caster
           </div>
@@ -48,7 +48,7 @@ const Footer = () => {
         rel="noopener noreferrer"
       >
         Powered by{" "}
-        <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+        <Image src="/logo.svg" alt="Vercel Logo" width={72} height={16} />
       </a>
     </footer>
   );
