@@ -1,6 +1,6 @@
 // Credit: https://github.com/gskril/farcaster-search/blob/d709a9fa9126cb93eede4336c1af3e4ed3d78e06/src/utils/cast.js
 
-export function formatCastText(text: string) {
+export function formatCastText(text: string, searchQuery: string) {
   const links = text.match(
     // Regex to identify URLS with .com, .xyz, .net, or .org extension (it doesn't have to start with http:// or https://)
     /\b(?:https?:\/\/)?[-a-zA-Z0-9@:%._+~#=][-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g
@@ -59,6 +59,19 @@ export function formatCastText(text: string) {
         );
       }
     });
+  }
+
+  if (searchQuery) {
+    const matches = new RegExp(searchQuery, "gi");
+    text = text.replace(matches, `<b>${searchQuery}</b>`);
+
+    // remove <b> tags from hrefs
+    const hrefs = text.match(/href="([^"]*)"/g);
+    if (hrefs) {
+      hrefs.forEach((href) => {
+        text = text.replace(href, href.replace(/<\/?b>/g, ""));
+      });
+    }
   }
 
   return (

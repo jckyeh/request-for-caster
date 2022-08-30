@@ -73,7 +73,7 @@ const Cast = ({ cast }) => {
             </div>
           </div>
           <div className="whitespace-pre-wrap break-words text-slate-800">
-            {formatCastText(cast.body.data.text)}
+            {formatCastText(cast.body.data.text, "request")}
           </div>
         </div>
       </div>
@@ -81,19 +81,74 @@ const Cast = ({ cast }) => {
   );
 };
 
-const InfoCard = () => {
+const InfoCard = (props) => {
+  console.log("props: ", props);
+
   return (
-    <div className="flex flex-col p-6 rounded-2xl mb-10 md:mb-14 bg-white border border-slate-200 drop-shadow-lg">
-      <div className="text-xl font-bold text-slate-900 mb-3">
-        About RFCaster
-      </div>
-      <div className="text-slate-700 whitespace-pre-line">
-        Request for Caster (RFCaster) is a list of feature or product requests
-        from the Farcaster community. <br />
-        <br />
-        Cast a request with the hashtag
-        <span className="font-semibold text-purple-700"> #RFCaster </span>
-        and it will be added to the list. New casts are indexed every 30min.
+    <div
+      className={
+        "flex flex-col p-6 rounded-2xl bg-white border border-slate-200 " +
+        (props.shadow ? "drop-shadow-xl" : "")
+      }
+    >
+      <div className="text-xl font-bold text-slate-900 mb-3">{props.title}</div>
+      <div className="text-slate-700 whitespace-pre-line">{props.text}</div>
+    </div>
+  );
+};
+
+const aboutCardText = (
+  <>
+    Request for Caster (RFCaster) is a list of feature or product requests from
+    the Farcaster community.
+    <br />
+    <br />
+    Cast a request with the hashtag
+    <span className="font-semibold text-purple-700"> #RFCaster </span>
+    and it will be added to the list. New casts are indexed every 30min.
+  </>
+);
+
+const resourcesCardText = (
+  <>
+    Want to hack on a request? Here are some helpful resources:
+    <br />
+    <br />
+    <ul className="text-purple-700">
+      <li>
+        <a
+          href="https://www.farcaster.xyz/docs/fetch-casts"
+          target="_blank"
+          rel="noopener"
+        >
+          Farcaster Tutorial
+        </a>
+      </li>
+      <li>
+        <a href="https://farapps.farcase.xyz/" target="_blank" rel="noopener">
+          Farcaster apps
+        </a>
+      </li>
+    </ul>
+  </>
+);
+
+const SideBar = () => {
+  return (
+    <div className="flex flex-initial flex-col md:order-last max-w-xl md:w-4/12 mx-auto md:ml-[8.333333333333332%] mb-10 md:mb-16 gap-6">
+      <InfoCard title="About RFCaster" text={aboutCardText} shadow />
+      <InfoCard title="Resources for Builders" text={resourcesCardText} />
+      <div className="hidden md:block text-sm text-slate-500">
+        💌 HMU for feedback or ideas! @jacky (FC), or on{" "}
+        <a
+          href="https://twitter.com/jckyeh"
+          target="_blank"
+          rel="noopener"
+          className="text-purple-700"
+        >
+          the bird app
+        </a>
+        .
       </div>
     </div>
   );
@@ -105,7 +160,7 @@ const Home: NextPage = ({ results }) => {
   console.log(`results props is: `, results);
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col items-center">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
@@ -113,9 +168,9 @@ const Home: NextPage = ({ results }) => {
 
       <Header />
 
-      <main className="px-6 md:px-10 pt-6 md:pt-12 max-w-7xl">
-        <div className="flex flex-1 flex-col w-full max-w-xl mx-auto">
-          <InfoCard />
+      <main className="md:flex md:flex-row px-6 md:px-10 pt-6 md:pt-12 w-full max-w-7xl">
+        <SideBar />
+        <div className="flex flex-auto flex-col w-full md:w-[58.333333333333336%] max-w-xl md:max-w-none mx-auto md:mx-0">
           <h1 className="text-3xl font-bold text-slate-900 md:mb-4">
             🪄 Requests
           </h1>
