@@ -181,10 +181,10 @@ const Home: NextPage = ({ results }: any) => {
           <h1 className="text-3xl font-bold text-slate-900 md:mb-4">
             💬 Requests
           </h1>
-          <div className="p-4 rounded-lg bg-purple-50 mt-6 mb-2 md:mt-4 md:mb-0">
+          {/* <div className="p-4 rounded-lg bg-purple-50 mt-6 mb-2 md:mt-4 md:mb-0">
             🚧 Currently showing casts mentioning "request" in addition to
             RequestCaster.
-          </div>
+          </div> */}
           {results.map((cast: any, index: number) => (
             <Cast key={index} cast={cast} />
           ))}
