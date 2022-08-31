@@ -4,11 +4,23 @@ import got from "got";
 
 export async function getCasts() {
   try {
-    const result = await axios.get(
+    const resultRequest = await axios.get(
       "https://searchcaster.xyz/api/search?text=request"
     );
+    const resultRequestCaster = await axios.get(
+      "https://searchcaster.xyz/api/search?text=requestcaster"
+    );
     // console.log("result: ", result.data);
-    return result.data.casts;
+
+    const result = resultRequest.data.casts.concat(
+      resultRequestCaster.data.casts
+    );
+
+    result.sort((a: any, b: any) =>
+      a.body.publishedAt > b.body.publishedAt ? -1 : 1
+    );
+
+    return result;
   } catch (error) {
     console.log(error);
     // return

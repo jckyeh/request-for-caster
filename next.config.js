@@ -10,6 +10,8 @@ module.exports = {
       "img.seadn.io",
       "res.cloudinary.com",
       "live.staticflickr.com",
+      "i.ibb.co",
+      "nonlinear.io",
     ],
   },
 };
