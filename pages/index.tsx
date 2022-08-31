@@ -29,7 +29,7 @@ const Header = () => {
         <div className="flex flex-row items-center gap-2">
           <Image src="/logo.svg" alt="Farcaster Logo" width={48} height={48} />
           <div className="font-semibold text-xl text-purple-700">
-            Request for Caster
+            RequestCaster
           </div>
         </div>
         {/* <div>Request for Caster</div> */}
@@ -104,12 +104,12 @@ const InfoCard = (props: InfoCardProps) => {
 
 const aboutCardText = (
   <>
-    Request for Caster (RFCaster) is a list of feature or product requests from
-    the Farcaster community.
+    RequestCaster is a list of feature or product requests from the Farcaster
+    community.
     <br />
     <br />
-    Cast a request with the hashtag
-    <span className="font-semibold text-purple-700"> #RFCaster </span>
+    Cast a request by mentioning
+    <span className="font-semibold text-purple-700"> RequestCaster </span>
     and it will be added to the list. New casts are indexed every 30min.
   </>
 );
@@ -142,7 +142,7 @@ const SideBar = () => {
   return (
     <div className="flex flex-initial flex-col md:sticky top-0 md:order-last max-w-xl md:w-4/12 mx-auto md:ml-[8.333333333333332%] mb-10 md:mb-16">
       <div className="flex flex-col sticky top-12 gap-6">
-        <InfoCard title="🪄 About RFCaster" text={aboutCardText} shadow />
+        <InfoCard title="🪄 About RequestCaster" text={aboutCardText} shadow />
         <InfoCard title="🏗 Resources for Builders" text={resourcesCardText} />
         <div className="hidden md:block text-sm text-slate-500">
           💌 HMU for feedback or ideas! @jacky (FC), or on{" "}
@@ -169,7 +169,7 @@ const Home: NextPage = ({ results }: any) => {
   return (
     <div className="flex min-h-screen flex-col items-center">
       <Head>
-        <title>Request for Caster</title>
+        <title>RequestCaster</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -183,7 +183,7 @@ const Home: NextPage = ({ results }: any) => {
           </h1>
           <div className="p-4 rounded-lg bg-purple-50 mt-6 mb-2 md:mt-4 md:mb-0">
             🚧 Currently showing casts mentioning "request" in addition to
-            #RFCaster
+            RequestCaster.
           </div>
           {results.map((cast: any, index: number) => (
             <Cast key={index} cast={cast} />
