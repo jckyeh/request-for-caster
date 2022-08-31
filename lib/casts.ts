@@ -20,7 +20,7 @@ export async function getCasts() {
       a.body.publishedAt > b.body.publishedAt ? -1 : 1
     );
 
-    return result;
+    return resultRequestCaster;
   } catch (error) {
     console.log(error);
     // return
