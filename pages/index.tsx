@@ -67,6 +67,11 @@ const Cast = ({ cast }: any) => {
             <CastEngagement icon={recastIcon} count={cast.meta.recasts.count} />
             <CastEngagement icon={watchIcon} count={cast.meta.watches.count} />
           </div>
+          <div className="mt-4">
+            <a href={`farcaster://casts/${cast.merkleRoot}`} className="text-purple-700">
+              View in Farcaster
+            </a>
+          </div>
         </div>
       </div>
     </div>
