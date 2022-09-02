@@ -1,12 +1,12 @@
 import type { NextPage } from "next";
-import { ReactNode } from "react";
+import { ReactChild, ReactNode } from "react";
 import Head from "next/head";
 import Image from "next/image";
 
 import { formatCastText } from "../utils/casts";
 import { getRelativeDate } from "../utils/date";
-
 import { getCasts } from "../lib/casts";
+import { likeIcon, recastIcon, watchIcon } from "../assets/icons";
 
 export async function getServerSideProps() {
   const results = await getCasts();
@@ -23,12 +23,25 @@ const Header = () => {
       <div className="flex flex-row justify-between items-center w-full max-w-6xl h-20 px-6 md:px-10">
         <div className="flex flex-row items-center gap-2">
           <Image src="/logo.svg" alt="Farcaster Logo" width={48} height={48} />
-          <div className="font-semibold text-xl text-purple-700">
-            RequestCaster
-          </div>
+          <div className="font-semibold text-xl text-purple-700">RequestCaster</div>
         </div>
       </div>
     </header>
+  );
+};
+interface CastEngagementProps {
+  icon: SVGElement;
+  count: number;
+}
+
+const CastEngagement = ({ icon, count }: CastEngagementProps) => {
+  return (
+    <div className="flex items-center gap-2 text-slate-500">
+      <>
+        {icon}
+        <span>{count}</span>
+      </>
+    </div>
   );
 };
 
@@ -37,12 +50,7 @@ const Cast = ({ cast }: any) => {
     <div className="border-b border-slate-200 w-full">
       <div className="flex gap-3 my-6 md:my-8">
         <div className="shrink-0">
-          <Image
-            src={cast.meta.avatar}
-            width={48}
-            height={48}
-            className="rounded-full"
-          />
+          <Image src={cast.meta.avatar} width={48} height={48} className="rounded-full" />
         </div>
         <div className="flex-auto w-0">
           <div className="flex flex-col md:flex-row">
@@ -53,6 +61,11 @@ const Cast = ({ cast }: any) => {
           </div>
           <div className="whitespace-pre-wrap break-words text-slate-800">
             {formatCastText(cast.body.data.text, "requestcaster")}
+          </div>
+          <div className="flex gap-12 mt-4">
+            <CastEngagement icon={likeIcon} count={cast.meta.reactions.count} />
+            <CastEngagement icon={recastIcon} count={cast.meta.recasts.count} />
+            <CastEngagement icon={watchIcon} count={cast.meta.watches.count} />
           </div>
         </div>
       </div>
@@ -70,8 +83,7 @@ const InfoCard = (props: InfoCardProps) => {
   return (
     <div
       className={
-        "flex flex-col p-6 rounded-2xl bg-white border border-slate-200 " +
-        (props.shadow ? "drop-shadow-xl" : "")
+        "flex flex-col p-6 rounded-2xl bg-white border border-slate-200 " + (props.shadow ? "drop-shadow-xl" : "")
       }
     >
       <div className="text-xl font-bold text-slate-900 mb-3">{props.title}</div>
@@ -82,8 +94,7 @@ const InfoCard = (props: InfoCardProps) => {
 
 const aboutCardText = (
   <>
-    RequestCaster is a list of feature or product requests from the Farcaster
-    community.
+    RequestCaster is a list of feature or product requests from the Farcaster community.
     <br />
     <br />
     Cast a request by mentioning
@@ -99,11 +110,7 @@ const resourcesCardText = (
     <br />
     <ul className="text-purple-700">
       <li>
-        <a
-          href="https://www.farcaster.xyz/docs/fetch-casts"
-          target="_blank"
-          rel="noopener"
-        >
+        <a href="https://www.farcaster.xyz/docs/fetch-casts" target="_blank" rel="noopener">
           Farcaster Tutorial
         </a>
       </li>
@@ -124,12 +131,7 @@ const SideBar = () => {
         <InfoCard title="🏗 Resources for Builders" text={resourcesCardText} />
         <div className="hidden md:block text-sm text-slate-500">
           💌 HMU for feedback or ideas! @jacky (FC), or on{" "}
-          <a
-            href="https://twitter.com/jckyeh"
-            target="_blank"
-            rel="noopener"
-            className="text-purple-700"
-          >
+          <a href="https://twitter.com/jckyeh" target="_blank" rel="noopener" className="text-purple-700">
             the bird app
           </a>
           .
@@ -150,11 +152,9 @@ const Home: NextPage = ({ results }: any) => {
       <main className="md:flex md:flex-row px-6 md:px-10 pt-6 md:pt-12 w-full max-w-6xl mb-16">
         <SideBar />
         <div className="flex flex-auto flex-col w-full md:w-[58.333333333333336%] max-w-xl md:max-w-none mx-auto md:mx-0">
-          <h1 className="text-3xl font-bold text-slate-900 md:mb-4">
-            💬 Requests
-          </h1>
-          {results.map((cast: any, index: number) => (
-            <Cast key={index} cast={cast} />
+          <h1 className="text-3xl font-bold text-slate-900 md:mb-4">💬 Requests</h1>
+          {results.map((cast: any) => (
+            <Cast key={cast.merkleRoot} cast={cast} />
           ))}
         </div>
       </main>
