@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { ReactChild, ReactNode } from "react";
+import { ReactNode } from "react";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -30,7 +30,7 @@ const Header = () => {
   );
 };
 interface CastEngagementProps {
-  icon: SVGElement;
+  icon: any;
   count: number;
 }
 
