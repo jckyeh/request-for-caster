@@ -1,22 +1,17 @@
-// import useSWR from 'swr';
-
 import type { NextPage } from "next";
 import { ReactNode } from "react";
 import Head from "next/head";
 import Image from "next/image";
 
-import CastList from "../components/CastList";
 import { formatCastText } from "../utils/casts";
 import { getRelativeDate } from "../utils/date";
 
-import { doStuff, getCasts } from "../lib/casts";
+import { getCasts } from "../lib/casts";
 
 export async function getServerSideProps() {
-  // const directory = await doStuff();
   const results = await getCasts();
   return {
     props: {
-      // directory,
       results,
     },
   };
@@ -32,25 +27,8 @@ const Header = () => {
             RequestCaster
           </div>
         </div>
-        {/* <div>Request for Caster</div> */}
       </div>
     </header>
-  );
-};
-
-const Footer = () => {
-  return (
-    <footer className="flex h-24 w-full items-center justify-center border-t">
-      <a
-        className="flex items-center justify-center gap-2"
-        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by{" "}
-        <Image src="/logo.svg" alt="Vercel Logo" width={72} height={16} />
-      </a>
-    </footer>
   );
 };
 
@@ -161,38 +139,25 @@ const SideBar = () => {
   );
 };
 
-// const Home: NextPage = ({ directory, results }) => {
 const Home: NextPage = ({ results }: any) => {
-  // console.log(`directoryUrl props is: `, directory);
-  console.log(`results props is: `, results);
-
   return (
     <div className="flex min-h-screen flex-col items-center">
       <Head>
         <title>RequestCaster</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <Header />
-
       <main className="md:flex md:flex-row px-6 md:px-10 pt-6 md:pt-12 w-full max-w-6xl mb-16">
         <SideBar />
         <div className="flex flex-auto flex-col w-full md:w-[58.333333333333336%] max-w-xl md:max-w-none mx-auto md:mx-0">
           <h1 className="text-3xl font-bold text-slate-900 md:mb-4">
             💬 Requests
           </h1>
-          {/* <div className="p-4 rounded-lg bg-purple-50 mt-6 mb-2 md:mt-4 md:mb-0">
-            🚧 Currently showing casts mentioning "request" in addition to
-            RequestCaster.
-          </div> */}
           {results.map((cast: any, index: number) => (
             <Cast key={index} cast={cast} />
           ))}
-          {/* <CastList /> */}
         </div>
       </main>
-
-      {/* <Footer /> */}
     </div>
   );
 };
