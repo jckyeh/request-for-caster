@@ -6,6 +6,7 @@ import Image from "next/image";
 import { formatCastText } from "../utils/casts";
 import { getRelativeDate } from "../utils/date";
 import { getCasts } from "../lib/casts";
+import ImageWithFallback from "../components/ImageWithFallback";
 import { likeIcon, recastIcon, watchIcon } from "../assets/icons";
 
 export async function getServerSideProps() {
@@ -50,7 +51,15 @@ const Cast = ({ cast }: any) => {
     <div className="border-b border-slate-200 w-full">
       <div className="flex gap-3 my-6 md:my-8">
         <div className="shrink-0">
-          <Image src={cast.meta.avatar} width={48} height={48} className="rounded-full" />
+          {/* <Image src={cast.meta.avatar} width={48} height={48} alt="avatar" className="rounded-full" /> */}
+          <ImageWithFallback
+            src={cast.meta.avatar}
+            fallbackSrc={"https://pbs.twimg.com/profile_images/1546487688601096192/QoG0ZVgH_400x400.jpg"}
+            width={48}
+            height={48}
+            alt="avatar"
+            className="rounded-full"
+          />
         </div>
         <div className="flex-auto w-0">
           <div className="flex flex-col md:flex-row">
@@ -60,7 +69,8 @@ const Cast = ({ cast }: any) => {
             </div>
           </div>
           <div className="whitespace-pre-wrap break-words text-slate-800">
-            {formatCastText(cast.body.data.text, "requestcaster")}
+            {/* {formatCastText(cast.body.data.text, "requestcaster")} */}
+            {formatCastText(cast.body.data.text, "request")}
           </div>
           <div className="flex gap-12 mt-4">
             <CastEngagement icon={likeIcon} count={cast.meta.reactions.count} />
@@ -147,6 +157,8 @@ const SideBar = () => {
 };
 
 const Home: NextPage = ({ results }: any) => {
+  console.log("results: ", results);
+
   return (
     <div className="flex min-h-screen flex-col items-center">
       <Head>
@@ -158,8 +170,9 @@ const Home: NextPage = ({ results }: any) => {
         <SideBar />
         <div className="flex flex-auto flex-col w-full md:w-[58.333333333333336%] max-w-xl md:max-w-none mx-auto md:mx-0">
           <h1 className="text-3xl font-bold text-slate-900 md:mb-4">💬 Requests</h1>
-          {results.map((cast: any) => (
-            <Cast key={cast.merkleRoot} cast={cast} />
+          {results.map((cast: any, index: number) => (
+            // <Cast key={cast.merkleRoot} cast={cast} />
+            <Cast key={index} cast={cast} />
           ))}
         </div>
       </main>

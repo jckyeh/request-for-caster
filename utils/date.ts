@@ -15,6 +15,6 @@ export const getRelativeDate = (unixMs) => {
   } else if (dayDiff < 30) {
     return `${dayDiff} ${dayDiff > 1 ? "days" : "day"} ago`;
   } else {
-    return date.toLocaleDateString();
+    return date.toLocaleDateString("en-US");
   }
 };
