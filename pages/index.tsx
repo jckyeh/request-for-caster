@@ -73,8 +73,7 @@ const Cast = ({ cast }: any) => {
             </div>
           </div>
           <div className="whitespace-pre-wrap break-words text-slate-800">
-            {/* {formatCastText(cast.body.data.text, "requestcaster")} */}
-            {formatCastText(cast.body.data.text, "request")}
+            {formatCastText(cast.body.data.text, "requestcaster")}
           </div>
           <div className="flex gap-12 mt-4">
             <CastEngagement icon={likeIcon} count={cast.meta.reactions.count} />
