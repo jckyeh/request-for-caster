@@ -2,22 +2,29 @@ import axios from "axios";
 
 export async function getCasts() {
   try {
-    const resultRequest = await axios.get(
-      "https://searchcaster.xyz/api/search?text=request"
+    const resultRequestFor = await axios.get(
+      "https://searchcaster.xyz/api/search?text=request+for"
     );
     const resultRequestCaster = await axios.get(
       "https://searchcaster.xyz/api/search?text=requestcaster"
     );
 
-    const result = resultRequest.data.casts.concat(
-      resultRequestCaster.data.casts
+    const uniqueMerkleRoots = new Set(
+      resultRequestFor.data.casts.map((cast: any) => cast.merkleRoot)
     );
 
-    result.sort((a: any, b: any) =>
+    const mergedCasts = [
+      ...resultRequestFor.data.casts,
+      ...resultRequestCaster.data.casts.filter(
+        (cast: any) => !uniqueMerkleRoots.has(cast.merkleRoot)
+      ),
+    ];
+
+    const sortedMergedCasts = mergedCasts.sort((a: any, b: any) =>
       a.body.publishedAt > b.body.publishedAt ? -1 : 1
     );
 
-    return resultRequestCaster.data.casts;
+    return sortedMergedCasts;
   } catch (error) {
     console.log(error);
   }

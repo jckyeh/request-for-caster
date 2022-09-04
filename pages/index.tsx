@@ -6,6 +6,7 @@ import Image from "next/image";
 import { formatCastText } from "../utils/casts";
 import { getRelativeDate } from "../utils/date";
 import { getCasts } from "../lib/casts";
+import ImageWithFallback from "../components/ImageWithFallback";
 import { likeIcon, recastIcon, watchIcon } from "../assets/icons";
 
 export async function getServerSideProps() {
@@ -23,7 +24,9 @@ const Header = () => {
       <div className="flex flex-row justify-between items-center w-full max-w-6xl h-20 px-6 md:px-10">
         <div className="flex flex-row items-center gap-2">
           <Image src="/logo.svg" alt="Farcaster Logo" width={48} height={48} />
-          <div className="font-semibold text-xl text-purple-700">RequestCaster</div>
+          <div className="font-semibold text-xl text-purple-700">
+            RequestCaster
+          </div>
         </div>
       </div>
     </header>
@@ -50,7 +53,17 @@ const Cast = ({ cast }: any) => {
     <div className="border-b border-slate-200 w-full">
       <div className="flex gap-3 my-6 md:my-8">
         <div className="shrink-0">
-          <Image src={cast.meta.avatar} width={48} height={48} className="rounded-full" />
+          {/* <Image src={cast.meta.avatar} width={48} height={48} alt="avatar" className="rounded-full" /> */}
+          <ImageWithFallback
+            src={cast.meta.avatar}
+            fallbackSrc={
+              "https://pbs.twimg.com/profile_images/1546487688601096192/QoG0ZVgH_400x400.jpg"
+            }
+            width={48}
+            height={48}
+            alt="avatar"
+            className="rounded-full"
+          />
         </div>
         <div className="flex-auto w-0">
           <div className="flex flex-col md:flex-row">
@@ -68,7 +81,10 @@ const Cast = ({ cast }: any) => {
             <CastEngagement icon={watchIcon} count={cast.meta.watches.count} />
           </div>
           <div className="mt-4">
-            <a href={`farcaster://casts/${cast.merkleRoot}`} className="text-purple-700">
+            <a
+              href={`farcaster://casts/${cast.merkleRoot}`}
+              className="text-purple-700"
+            >
               View in Farcaster
             </a>
           </div>
@@ -88,7 +104,8 @@ const InfoCard = (props: InfoCardProps) => {
   return (
     <div
       className={
-        "flex flex-col p-6 rounded-2xl bg-white border border-slate-200 " + (props.shadow ? "drop-shadow-xl" : "")
+        "flex flex-col p-6 rounded-2xl bg-white border border-slate-200 " +
+        (props.shadow ? "drop-shadow-xl" : "")
       }
     >
       <div className="text-xl font-bold text-slate-900 mb-3">{props.title}</div>
@@ -99,7 +116,8 @@ const InfoCard = (props: InfoCardProps) => {
 
 const aboutCardText = (
   <>
-    RequestCaster is a list of feature or product requests from the Farcaster community.
+    RequestCaster is a list of feature or product requests from the Farcaster
+    community.
     <br />
     <br />
     Cast a request by mentioning
@@ -115,7 +133,11 @@ const resourcesCardText = (
     <br />
     <ul className="text-purple-700">
       <li>
-        <a href="https://www.farcaster.xyz/docs/fetch-casts" target="_blank" rel="noopener">
+        <a
+          href="https://www.farcaster.xyz/docs/fetch-casts"
+          target="_blank"
+          rel="noopener"
+        >
           Farcaster Tutorial
         </a>
       </li>
@@ -136,7 +158,12 @@ const SideBar = () => {
         <InfoCard title="🏗 Resources for Builders" text={resourcesCardText} />
         <div className="hidden md:block text-sm text-slate-500">
           💌 HMU for feedback or ideas! @jacky (FC), or on{" "}
-          <a href="https://twitter.com/jckyeh" target="_blank" rel="noopener" className="text-purple-700">
+          <a
+            href="https://twitter.com/jckyeh"
+            target="_blank"
+            rel="noopener"
+            className="text-purple-700"
+          >
             the bird app
           </a>
           .
@@ -147,6 +174,8 @@ const SideBar = () => {
 };
 
 const Home: NextPage = ({ results }: any) => {
+  console.log("results: ", results);
+
   return (
     <div className="flex min-h-screen flex-col items-center">
       <Head>
@@ -157,9 +186,12 @@ const Home: NextPage = ({ results }: any) => {
       <main className="md:flex md:flex-row px-6 md:px-10 pt-6 md:pt-12 w-full max-w-6xl mb-16">
         <SideBar />
         <div className="flex flex-auto flex-col w-full md:w-[58.333333333333336%] max-w-xl md:max-w-none mx-auto md:mx-0">
-          <h1 className="text-3xl font-bold text-slate-900 md:mb-4">💬 Requests</h1>
-          {results.map((cast: any) => (
-            <Cast key={cast.merkleRoot} cast={cast} />
+          <h1 className="text-3xl font-bold text-slate-900 md:mb-4">
+            💬 Requests
+          </h1>
+          {results.map((cast: any, index: number) => (
+            // <Cast key={cast.merkleRoot} cast={cast} />
+            <Cast key={index} cast={cast} />
           ))}
         </div>
       </main>
